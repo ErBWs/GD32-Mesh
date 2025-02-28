@@ -239,7 +239,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "gateway.kicad_pro",
+    "filename": "adapter.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -384,7 +384,7 @@
   },
   "sheets": [
     [
-      "b23fba04-b800-480a-8334-9433113e049c",
+      "94e495b9-aacd-42f9-8fd4-d71efea805b1",
       "根目录"
     ]
   ],
