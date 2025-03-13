@@ -90,10 +90,10 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
     /**ADC1 GPIO Configuration
     PC1     ------> ADC1_IN11
     */
-    GPIO_InitStruct.Pin = mq2_adc_Pin;
+    GPIO_InitStruct.Pin = MQ2_ADC_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
-    HAL_GPIO_Init(mq2_adc_GPIO_Port, &GPIO_InitStruct);
+    HAL_GPIO_Init(MQ2_ADC_GPIO_Port, &GPIO_InitStruct);
 
   /* USER CODE BEGIN ADC1_MspInit 1 */
 
@@ -115,7 +115,7 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
     /**ADC1 GPIO Configuration
     PC1     ------> ADC1_IN11
     */
-    HAL_GPIO_DeInit(mq2_adc_GPIO_Port, mq2_adc_Pin);
+    HAL_GPIO_DeInit(MQ2_ADC_GPIO_Port, MQ2_ADC_Pin);
 
   /* USER CODE BEGIN ADC1_MspDeInit 1 */
 

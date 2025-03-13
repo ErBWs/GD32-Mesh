@@ -31,7 +31,8 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdio.h>
+#include "aht10.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -57,22 +58,22 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define led1_Pin GPIO_PIN_3
-#define led1_GPIO_Port GPIOE
-#define mq2_adc_Pin GPIO_PIN_1
-#define mq2_adc_GPIO_Port GPIOC
-#define mq2_pin_Pin GPIO_PIN_1
-#define mq2_pin_GPIO_Port GPIOA
-#define led4_Pin GPIO_PIN_5
-#define led4_GPIO_Port GPIOA
-#define led3_Pin GPIO_PIN_3
-#define led3_GPIO_Port GPIOG
-#define led2_Pin GPIO_PIN_7
-#define led2_GPIO_Port GPIOD
-#define aht10_scl_Pin GPIO_PIN_8
-#define aht10_scl_GPIO_Port GPIOB
-#define aht10_sda_Pin GPIO_PIN_9
-#define aht10_sda_GPIO_Port GPIOB
+#define LED1_Pin GPIO_PIN_3
+#define LED1_GPIO_Port GPIOE
+#define MQ2_ADC_Pin GPIO_PIN_1
+#define MQ2_ADC_GPIO_Port GPIOC
+#define MQ2_Pin GPIO_PIN_1
+#define MQ2_GPIO_Port GPIOA
+#define LED4_Pin GPIO_PIN_5
+#define LED4_GPIO_Port GPIOA
+#define LED3_Pin GPIO_PIN_3
+#define LED3_GPIO_Port GPIOG
+#define LED2_Pin GPIO_PIN_7
+#define LED2_GPIO_Port GPIOD
+#define AHT10_SCL_Pin GPIO_PIN_8
+#define AHT10_SCL_GPIO_Port GPIOB
+#define AHT10_SDA_Pin GPIO_PIN_9
+#define AHT10_SDA_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 
