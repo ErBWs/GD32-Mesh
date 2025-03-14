@@ -16,13 +16,14 @@ static soft_iic_info_struct aht10_iic = {
         .delay = AHT10_DELAY
 };
 
-double aht10_temperature = 0.0;
-double aht10_humidity = 0.0;
-
-void aht10_read()
+aht10_info_t aht10_read()
 {
     uint8_t start_cmd[3] = {0xac, 0x33, 0x00};
     uint8_t res[6] = {0};
+    aht10_info_t info = {
+            .temperature = 0,
+            .humidity = 0,
+    };
 
     // Send cmd to trigger aht10 measurement
     soft_iic_write_8bit_array(&aht10_iic, start_cmd, 3);
@@ -34,8 +35,10 @@ void aht10_read()
 
     // Convert
     int hum = (((res[1] << 12) | (res[2] << 4)) | (res[3] >> 4));
-    aht10_humidity = (double) hum / 1048576.0 * 100.0;
+    info.humidity = (double) hum / 1048576.0 * 100.0;
 
     int temp = ((res[3] & 0x0F) << 16) | (res[4] << 8) | res[5];
-    aht10_temperature = (double) temp / 1048576.0 * 200 - 50;
+    info.temperature = (double) temp / 1048576.0 * 200 - 50;
+
+    return info;
 }

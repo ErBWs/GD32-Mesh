@@ -45,7 +45,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+aht10_info_t aht10_info;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -102,10 +102,10 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-      aht10_read();
+      aht10_info = aht10_read();
       HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-      printf("temperature: %f\r\n", aht10_temperature);
-      printf("humidity: %f\r\n", aht10_humidity);
+      printf("temperature: %f\r\n", aht10_info.temperature);
+      printf("humidity: %f\r\n", aht10_info.humidity);
       HAL_Delay(500);
     /* USER CODE END WHILE */
 

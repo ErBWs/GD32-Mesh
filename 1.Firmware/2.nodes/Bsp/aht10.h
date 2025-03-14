@@ -19,10 +19,12 @@ extern "C"
 #define AHT10_ADDR      0x38
 #define AHT10_DELAY     100
 
-extern double aht10_temperature;
-extern double aht10_humidity;
+typedef struct {
+    double temperature;
+    double humidity;
+} aht10_info_t;
 
-void aht10_read();
+aht10_info_t aht10_read();
 
 #ifdef __cplusplus
 }
