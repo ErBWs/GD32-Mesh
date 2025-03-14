@@ -593,27 +593,3 @@ uint8_t soft_iic_sccb_read_register(soft_iic_info_struct *iic, const uint8_t reg
     soft_iic_stop(iic);
     return temp;
 }
-
-/**
- * @brief       软件 IIC 接口初始化 默认 MASTER 模式 不提供 SLAVE 模式
- * @param       *iic        软件 IIC 指定信息存放结构体的指针
- * @param       addr        软件 IIC 地址 这里需要注意 标准七位地址 最高位忽略 写入时请务必确认无误
- * @param       delay       软件 IIC 延时 就是时钟高电平时间 越短 IIC 速率越高
- * @param       scl_port    软件 IIC 时钟引脚
- * @param       scl_pin     软件 IIC 时钟引脚号
- * @param       sda_port    软件 IIC 数据引脚
- * @param       sda_pin     软件 IIC 数据引脚号
- * @return      void
- * @example     soft_iic_init(&iic, addr, 100, GPIOB, 6, GPIOB, 7);
- */
-void
-soft_iic_init(soft_iic_info_struct *iic, uint8_t addr, uint32_t delay, GPIO_TypeDef *scl_port, uint16_t scl_pin,
-              GPIO_TypeDef *sda_port, uint16_t sda_pin)
-{
-    iic->scl_port = scl_port;
-    iic->scl_pin = scl_pin;
-    iic->sda_port = sda_port;
-    iic->sda_pin = sda_pin;
-    iic->addr = addr;
-    iic->delay = delay;
-}

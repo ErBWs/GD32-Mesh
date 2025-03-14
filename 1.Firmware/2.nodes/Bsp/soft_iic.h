@@ -106,10 +106,6 @@ void soft_iic_sccb_write_register(soft_iic_info_struct *iic, uint8_t register_na
 
 uint8_t soft_iic_sccb_read_register(soft_iic_info_struct *iic, uint8_t register_name);
 
-void
-soft_iic_init(soft_iic_info_struct *iic, uint8_t addr, uint32_t delay, GPIO_TypeDef *scl_port, uint16_t scl_pin,
-              GPIO_TypeDef *sda_port, uint16_t sda_pin);
-
 #ifdef __cplusplus
 }
 #endif
