@@ -16,6 +16,12 @@ static soft_iic_info_struct aht10_iic = {
         .delay = AHT10_DELAY
 };
 
+/**
+ * @brief   Trigger aht10 measurement and read value
+ * @param   void
+ *
+ * @return  aht10_info_t    aht10 info struct
+ */
 aht10_info_t aht10_read()
 {
     uint8_t start_cmd[3] = {0xac, 0x33, 0x00};
