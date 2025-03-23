@@ -39,13 +39,10 @@
 #define SOFT_IIC_SDA_IO_SWITCH      (0)
 
 /**
- * @brief       软件 IIC START 信号
- * @param       *iic    软件 IIC 结构体指针
- * @return      void
- * @example     soft_iic_start(iic);
- * @note        内部调用
+ * 软件 IIC START 信号 内部调用
+ * @param       iic     软件 IIC 结构体指针
  */
-static void soft_iic_start(soft_iic_info_struct *iic)
+static void soft_iic_start(const soft_iic_info_struct *iic)
 {
     HAL_GPIO_WritePin(iic->scl_port, iic->scl_pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(iic->sda_port, iic->sda_pin, GPIO_PIN_SET);
@@ -57,13 +54,10 @@ static void soft_iic_start(soft_iic_info_struct *iic)
 }
 
 /**
- * @brief       软件 IIC STOP 信号
- * @param       *iic    软件 IIC 结构体指针
- * @return      void
- * @example     soft_iic_stop(iic);
- * @note        内部调用
+ * 软件 IIC STOP 信号 内部调用
+ * @param       iic     软件 IIC 结构体指针
  */
-static void soft_iic_stop(soft_iic_info_struct *iic)
+static void soft_iic_stop(const soft_iic_info_struct *iic)
 {
     HAL_GPIO_WritePin(iic->sda_port, iic->sda_pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(iic->scl_port, iic->scl_pin, GPIO_PIN_RESET);
@@ -76,14 +70,11 @@ static void soft_iic_stop(soft_iic_info_struct *iic)
 }
 
 /**
- * @brief       软件 IIC 发送 ACK/NAKC 信号 内部调用
- * @param       *iic    软件 IIC 结构体指针
+ * 软件 IIC 发送 ACK/NAKC 信号 内部调用
+ * @param       iic     软件 IIC 结构体指针
  * @param       ack     ACK 电平
- * @return      void
- * @example     soft_iic_send_ack(iic, 1);
- * @note        内部调用
  */
-static void soft_iic_send_ack(soft_iic_info_struct *iic, uint8_t ack)
+static void soft_iic_send_ack(const soft_iic_info_struct *iic, const uint8_t ack)
 {
     HAL_GPIO_WritePin(iic->scl_port, iic->scl_pin, GPIO_PIN_RESET);
 
@@ -101,11 +92,9 @@ static void soft_iic_send_ack(soft_iic_info_struct *iic, uint8_t ack)
 }
 
 /**
- * @brief       软件 IIC 获取 ACK/NAKC 信号
- * @param       *iic    软件 IIC 结构体指针
+ * 软件 IIC 获取 ACK/NAKC 信号 内部调用
+ * @param       iic     软件 IIC 结构体指针
  * @return      uint8_t ACK 状态
- * @example     soft_iic_wait_ack(iic);
- * @note        内部调用
  */
 static uint8_t soft_iic_wait_ack(soft_iic_info_struct *iic)
 {
@@ -132,11 +121,10 @@ static uint8_t soft_iic_wait_ack(soft_iic_info_struct *iic)
 }
 
 /**
- * @brief       软件 IIC 发送 8bit 数据
- * @param       *iic    软件 IIC 结构体指针
+ * 软件 IIC 发送 8bit 数据 内部调用
+ * @param       iic     软件 IIC 结构体指针
  * @param       data    数据
  * @return      uint8_t ACK 状态
- * @note        内部调用
  */
 static uint8_t soft_iic_send_data(soft_iic_info_struct *iic, const uint8_t data)
 {
@@ -155,11 +143,10 @@ static uint8_t soft_iic_send_data(soft_iic_info_struct *iic, const uint8_t data)
 }
 
 /**
- * @brief       软件 IIC 读取 8bit 数据
- * @param       *iic    软件 IIC 结构体指针
+ * 软件 IIC 读取 8bit 数据 内部调用
+ * @param       iic     软件 IIC 结构体指针
  * @param       ack     ACK 或 NACK
  * @return      uint8_t 数据
- * @note        内部调用
  */
 static uint8_t soft_iic_read_data(soft_iic_info_struct *iic, uint8_t ack)
 {
@@ -189,11 +176,9 @@ static uint8_t soft_iic_read_data(soft_iic_info_struct *iic, uint8_t ack)
 }
 
 /**
- * @brief       软件 IIC 接口写 8bit 数据
- * @param       *iic    软件 IIC 结构体指针
+ * 软件 IIC 接口写 8bit 数据
+ * @param       iic     软件 IIC 结构体指针
  * @param       data    要写入的数据
- * @return      void            
- * @example     soft_iic_write_8bit_register(iic, 0x01);
  */
 void soft_iic_write_8bit(soft_iic_info_struct *iic, const uint8_t data)
 {
@@ -204,12 +189,10 @@ void soft_iic_write_8bit(soft_iic_info_struct *iic, const uint8_t data)
 }
 
 /**
- * @brief       软件 IIC 接口写 8bit 数组
- * @param       *iic    软件 IIC 结构体指针
- * @param       *data   数据存放缓冲区
+ * 软件 IIC 接口写 8bit 数组
+ * @param       iic     软件 IIC 结构体指针
+ * @param       data    数据存放缓冲区
  * @param       len     缓冲区长度
- * @return      void            
- * @example     soft_iic_write_8bit_array(iic, data, 6);
  */
 void soft_iic_write_8bit_array(soft_iic_info_struct *iic, const uint8_t *data, uint32_t len)
 {
@@ -222,11 +205,9 @@ void soft_iic_write_8bit_array(soft_iic_info_struct *iic, const uint8_t *data, u
 }
 
 /**
- * @brief       软件 IIC 接口器写 16bit 数据
- * @param       *iic    软件 IIC 结构体指针
+ * 软件 IIC 接口器写 16bit 数据
+ * @param       iic     软件 IIC 结构体指针
  * @param       data    要写入的数据
- * @return      void            
- * @example     soft_iic_write_16bit(iic, 0x0101);
  */
 void soft_iic_write_16bit(soft_iic_info_struct *iic, const uint16_t data)
 {
@@ -238,12 +219,10 @@ void soft_iic_write_16bit(soft_iic_info_struct *iic, const uint16_t data)
 }
 
 /**
- * @brief       软件 IIC 接口写 16bit 数组
- * @param       *iic    软件 IIC 结构体指针
- * @param       *data   数据存放缓冲区
+ * 软件 IIC 接口写 16bit 数组
+ * @param       iic     软件 IIC 结构体指针
+ * @param       data    数据存放缓冲区
  * @param       len     缓冲区长度
- * @return      void            
- * @example     soft_iic_write_16bit_array(iic, data, 6);
  */
 void soft_iic_write_16bit_array(soft_iic_info_struct *iic, const uint16_t *data, uint32_t len)
 {
@@ -257,12 +236,10 @@ void soft_iic_write_16bit_array(soft_iic_info_struct *iic, const uint16_t *data,
 }
 
 /**
- * @brief       软件 IIC 接口向传感器寄存器写 8bit 数据
- * @param       *iic            软件 IIC 结构体指针
+ * 软件 IIC 接口向传感器寄存器写 8bit 数据
+ * @param       iic             软件 IIC 结构体指针
  * @param       register_name   传感器的寄存器地址
  * @param       data            要写入的数据
- * @return      void            
- * @example     soft_iic_write_8bit_register(iic, 0x01, 0x01);
  */
 void soft_iic_write_8bit_register(soft_iic_info_struct *iic, const uint8_t register_name, const uint8_t data)
 {
@@ -274,13 +251,11 @@ void soft_iic_write_8bit_register(soft_iic_info_struct *iic, const uint8_t regis
 }
 
 /**
- * @brief       软件 IIC 接口向传感器寄存器写 8bit 数组
- * @param       *iic            软件 IIC 结构体指针
+ * 软件 IIC 接口向传感器寄存器写 8bit 数组
+ * @param       iic             软件 IIC 结构体指针
  * @param       register_name   传感器的寄存器地址
- * @param       *data           数据存放缓冲区
+ * @param       data            数据存放缓冲区
  * @param       len             缓冲区长度
- * @return      void            
- * @example     soft_iic_write_8bit_registers(iic, 0x01, data, 6);
  */
 void soft_iic_write_8bit_registers(soft_iic_info_struct *iic, const uint8_t register_name, const uint8_t *data,
                                    uint32_t len)
@@ -295,32 +270,28 @@ void soft_iic_write_8bit_registers(soft_iic_info_struct *iic, const uint8_t regi
 }
 
 /**
- * @brief       软件 IIC 接口向传感器寄存器写 16bit 数据
- * @param       *iic            软件 IIC 结构体指针
+ * 软件 IIC 接口向传感器寄存器写 16bit 数据
+ * @param       iic             软件 IIC 结构体指针
  * @param       register_name   传感器的寄存器地址
  * @param       data            要写入的数据
- * @return      void            
- * @example     soft_iic_write_16bit_register(iic, 0x0101, 0x0101);
  */
-void soft_iic_write_16bit_register(soft_iic_info_struct *iic, const uint16_t register_name, const uint16_t data)
+void soft_iic_write_16bit_register(soft_iic_info_struct *iic, const uint16_t register_name, const uint16_t *data)
 {
     soft_iic_start(iic);
     soft_iic_send_data(iic, iic->addr << 1);
     soft_iic_send_data(iic, (uint8_t) ((register_name & 0xFF00) >> 8));
     soft_iic_send_data(iic, (uint8_t) (register_name & 0x00FF));
-    soft_iic_send_data(iic, (uint8_t) ((data & 0xFF00) >> 8));
-    soft_iic_send_data(iic, (uint8_t) (data & 0x00FF));
+    soft_iic_send_data(iic, (uint8_t) ((*data & 0xFF00) >> 8));
+    soft_iic_send_data(iic, (uint8_t) (*data & 0x00FF));
     soft_iic_stop(iic);
 }
 
 /**
- * @brief       软件 IIC 接口向传感器寄存器写 16bit 数组
- * @param       *iic            软件 IIC 结构体指针
+ * 软件 IIC 接口向传感器寄存器写 16bit 数组
+ * @param       iic             软件 IIC 结构体指针
  * @param       register_name   传感器的寄存器地址
- * @param       *data           数据存放缓冲区
+ * @param       data            数据存放缓冲区
  * @param       len             缓冲区长度
- * @return      void            
- * @example     soft_iic_write_16bit_registers(iic, 0x0101, data, 6);
  */
 void soft_iic_write_16bit_registers(soft_iic_info_struct *iic, const uint16_t register_name, const uint16_t *data,
                                     uint32_t len)
@@ -337,10 +308,9 @@ void soft_iic_write_16bit_registers(soft_iic_info_struct *iic, const uint16_t re
 }
 
 /**
- * @brief       软件 IIC 接口读取 8bit 数据
- * @param       *iic        软件 IIC 结构体指针
+ * 软件 IIC 接口读取 8bit 数据
+ * @param       iic         软件 IIC 结构体指针
  * @return      uint8_t     返回读取的 8bit 数据
- * @example     soft_iic_read_8bit(iic);
  */
 uint8_t soft_iic_read_8bit(soft_iic_info_struct *iic)
 {
@@ -353,13 +323,10 @@ uint8_t soft_iic_read_8bit(soft_iic_info_struct *iic)
 }
 
 /**
- * @brief       软件 IIC 接口从传感器寄存器读取 8bit 数组
- * @param       *iic            软件 IIC 结构体指针
- * @param       register_name   传感器的寄存器地址
- * @param       *data           要读取的数据的缓冲区指针
+ * 软件 IIC 接口从传感器寄存器读取 8bit 数组
+ * @param       iic             软件 IIC 结构体指针
+ * @param       data            要读取的数据的缓冲区指针
  * @param       len             要读取的数据长度
- * @return      void            
- * @example     soft_iic_read_8bit_array(iic, data, 8);
  */
 void soft_iic_read_8bit_array(soft_iic_info_struct *iic, uint8_t *data, uint32_t len)
 {
@@ -372,11 +339,9 @@ void soft_iic_read_8bit_array(soft_iic_info_struct *iic, uint8_t *data, uint32_t
 }
 
 /**
- * @brief       软件 IIC 接口读取 16bit 数据
- * @param       *iic            软件 IIC 结构体指针
- * @param       register_name   传感器的寄存器地址
+ * 软件 IIC 接口读取 16bit 数据
+ * @param       iic             软件 IIC 结构体指针
  * @return      uint16_t        返回读取的 16bit 数据
- * @example     soft_iic_read_16bit(iic);
  */
 uint16_t soft_iic_read_16bit(soft_iic_info_struct *iic)
 {
@@ -390,12 +355,10 @@ uint16_t soft_iic_read_16bit(soft_iic_info_struct *iic)
 }
 
 /**
- * @brief       软件 IIC 接口读取 16bit 数组
- * @param       *iic    软件 IIC 结构体指针
- * @param       *data   要读取的数据的缓冲区指针
+ * 软件 IIC 接口读取 16bit 数组
+ * @param       iic     软件 IIC 结构体指针
+ * @param       data    要读取的数据的缓冲区指针
  * @param       len     要读取的数据长度
- * @return      void            
- * @example     soft_iic_read_16bit_array(iic, data, 8);
  */
 void soft_iic_read_16bit_array(soft_iic_info_struct *iic, uint16_t *data, uint32_t len)
 {
@@ -410,11 +373,10 @@ void soft_iic_read_16bit_array(soft_iic_info_struct *iic, uint16_t *data, uint32
 }
 
 /**
- * @brief       软件 IIC 接口从传感器寄存器读取 8bit 数据
- * @param       *iic            软件 IIC 结构体指针
+ * 软件 IIC 接口从传感器寄存器读取 8bit 数据
+ * @param       iic             软件 IIC 结构体指针
  * @param       register_name   传感器的寄存器地址
  * @return      uint8_t         返回读取的 8bit 数据
- * @example     soft_iic_read_8bit_register(iic, 0x01);
  */
 uint8_t soft_iic_read_8bit_register(soft_iic_info_struct *iic, const uint8_t register_name)
 {
@@ -430,13 +392,11 @@ uint8_t soft_iic_read_8bit_register(soft_iic_info_struct *iic, const uint8_t reg
 }
 
 /**
- * @brief       软件 IIC 接口从传感器寄存器读取 8bit 数组
- * @param       *iic            软件 IIC 结构体指针
+ * 软件 IIC 接口从传感器寄存器读取 8bit 数组
+ * @param       iic             软件 IIC 结构体指针
  * @param       register_name   传感器的寄存器地址
- * @param       *data           要读取的数据的缓冲区指针
+ * @param       data            要读取的数据的缓冲区指针
  * @param       len             要读取的数据长度
- * @return      void            
- * @example     soft_iic_read_8bit_registers(iic, 0x01, data, 8);
  */
 void
 soft_iic_read_8bit_registers(soft_iic_info_struct *iic, const uint8_t register_name, uint8_t *data, uint32_t len)
@@ -453,11 +413,10 @@ soft_iic_read_8bit_registers(soft_iic_info_struct *iic, const uint8_t register_n
 }
 
 /**
- * @brief       软件 IIC 接口从传感器寄存器读取 16bit 数据
- * @param       *iic            软件 IIC 结构体指针
+ * 软件 IIC 接口从传感器寄存器读取 16bit 数据
+ * @param       iic             软件 IIC 结构体指针
  * @param       register_name   传感器的寄存器地址
  * @return      uint16_t        返回读取的 16bit 数据
- * @example     soft_iic_read_16bit_register(iic, 0x0101);
  */
 uint16_t soft_iic_read_16bit_register(soft_iic_info_struct *iic, const uint16_t register_name)
 {
@@ -475,13 +434,11 @@ uint16_t soft_iic_read_16bit_register(soft_iic_info_struct *iic, const uint16_t 
 }
 
 /**
- * @brief       软件 IIC 接口从传感器寄存器读取 16bit 数组
- * @param       *iic            软件 IIC 结构体指针
+ * 软件 IIC 接口从传感器寄存器读取 16bit 数组
+ * @param       iic             软件 IIC 结构体指针
  * @param       register_name   传感器的寄存器地址
- * @param       *data           要读取的数据的缓冲区指针
+ * @param       data            要读取的数据的缓冲区指针
  * @param       len             要读取的数据长度
- * @return      void            
- * @example     soft_iic_read_16bit_registers(iic, 0x0101, data, 8);
  */
 void
 soft_iic_read_16bit_registers(soft_iic_info_struct *iic, const uint16_t register_name, uint16_t *data, uint32_t len)
@@ -501,14 +458,12 @@ soft_iic_read_16bit_registers(soft_iic_info_struct *iic, const uint16_t register
 }
 
 /**
- * @brief       软件 IIC 接口传输 8bit 数组 先写后读取
- * @param       *iic            软件 IIC 结构体指针
- * @param       *write_data     发送数据存放缓冲区
+ * 软件 IIC 接口传输 8bit 数组 先写后读取
+ * @param       iic             软件 IIC 结构体指针
+ * @param       write_data      发送数据存放缓冲区
  * @param       write_len       发送缓冲区长度
- * @param       *read_data      读取数据存放缓冲区
+ * @param       read_data       读取数据存放缓冲区
  * @param       read_len        读取缓冲区长度
- * @return      void            
- * @example     iic_transfer_8bit_array(IIC_1, addr, data, 64, data, 64);
  */
 void soft_iic_transfer_8bit_array(soft_iic_info_struct *iic, const uint8_t *write_data, uint32_t write_len,
                                   uint8_t *read_data, uint32_t read_len)
@@ -527,14 +482,12 @@ void soft_iic_transfer_8bit_array(soft_iic_info_struct *iic, const uint8_t *writ
 }
 
 /**
- * @brief       软件 IIC 接口传输 16bit 数组 先写后读取
- * @param       *iic            软件 IIC 结构体指针
- * @param       *write_data     发送数据存放缓冲区
+ * 软件 IIC 接口传输 16bit 数组 先写后读取
+ * @param       iic            软件 IIC 结构体指针
+ * @param       write_data     发送数据存放缓冲区
  * @param       write_len       发送缓冲区长度
- * @param       *read_data      读取数据存放缓冲区
+ * @param       read_data      读取数据存放缓冲区
  * @param       read_len        读取缓冲区长度
- * @return      void            
- * @example     iic_transfer_16bit_array(IIC_1, addr, data, 64, data, 64);
  */
 void soft_iic_transfer_16bit_array(soft_iic_info_struct *iic, const uint16_t *write_data, uint32_t write_len,
                                    uint16_t *read_data, uint32_t read_len)
@@ -556,12 +509,10 @@ void soft_iic_transfer_16bit_array(soft_iic_info_struct *iic, const uint16_t *wr
 }
 
 /**
- * @brief       软件 IIC 接口 SCCB 模式向传感器寄存器写 8bit 数据
- * @param       *iic            软件 IIC 结构体指针
+ * 软件 IIC 接口 SCCB 模式向传感器寄存器写 8bit 数据
+ * @param       iic            软件 IIC 结构体指针
  * @param       register_name   传感器的寄存器地址
  * @param       data            要写入的数据
- * @return      void            
- * @example     soft_iic_sccb_write_register(iic, 0x01, 0x01);
  */
 void soft_iic_sccb_write_register(soft_iic_info_struct *iic, const uint8_t register_name, uint8_t data)
 {
@@ -573,11 +524,10 @@ void soft_iic_sccb_write_register(soft_iic_info_struct *iic, const uint8_t regis
 }
 
 /**
- * @brief       软件 IIC 接口 SCCB 模式从传感器寄存器读取 8bit 数据
- * @param       *iic   软件 IIC 结构体指针
+ * 软件 IIC 接口 SCCB 模式从传感器寄存器读取 8bit 数据
+ * @param       iic             软件 IIC 结构体指针
  * @param       register_name   传感器的寄存器地址
  * @return      uint8_t         返回读取的 8bit 数据
- * @example     soft_iic_sccb_read_register(iic, 0x01);
  */
 uint8_t soft_iic_sccb_read_register(soft_iic_info_struct *iic, const uint8_t register_name)
 {

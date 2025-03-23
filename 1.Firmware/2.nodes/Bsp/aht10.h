@@ -13,9 +13,6 @@ extern "C"
 {
 #endif
 
-#include <stdint.h>
-#include "soft_iic.h"
-
 #define AHT10_ADDR      0x38
 #define AHT10_DELAY     100
 

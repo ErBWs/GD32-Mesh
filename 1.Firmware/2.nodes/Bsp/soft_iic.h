@@ -45,12 +45,10 @@ extern "C"
 #include "main.h"
 
 /**
- * @brief       软件 IIC 延时
+ * 软件 IIC 延时
  * @param       delay   延时次数
- * @return      void
- * @example     SOFT_IIC_DELAY(1);
  */
-#define SOFT_IIC_DELAY(x)  for(uint32_t i = x; i--; )
+#define SOFT_IIC_DELAY(x)  for(uint32_t i = x; i--; ) {}
 
 typedef struct {
     GPIO_TypeDef *scl_port;
@@ -73,7 +71,7 @@ void soft_iic_write_8bit_register(soft_iic_info_struct *iic, uint8_t register_na
 
 void soft_iic_write_8bit_registers(soft_iic_info_struct *iic, uint8_t register_name, const uint8_t *data, uint32_t len);
 
-void soft_iic_write_16bit_register(soft_iic_info_struct *iic, uint16_t register_name, uint16_t data);
+void soft_iic_write_16bit_register(soft_iic_info_struct *iic, uint16_t register_name, const uint16_t *data);
 
 void
 soft_iic_write_16bit_registers(soft_iic_info_struct *iic, uint16_t register_name, const uint16_t *data, uint32_t len);
