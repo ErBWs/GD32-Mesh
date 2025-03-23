@@ -6,7 +6,7 @@
  */
 
 #include "mq2.h"
-#include "stm32f4xx_hal_adc.h"
+#include "main.h"
 #include "adc.h"
 
 static uint16_t mq2_adc_val[10] = {0};
@@ -17,7 +17,7 @@ float mq2_value = 0;
  */
 void mq2_init()
 {
-    HAL_ADC_Start_DMA(&hadc1, mq2_adc_val, 10);
+    HAL_ADC_Start_DMA(&hadc1, (uint32_t*)mq2_adc_val, 10);
 }
 
 /**
