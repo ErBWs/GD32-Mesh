@@ -19,8 +19,7 @@ static soft_iic_info_struct aht10_iic = {
 };
 
 /**
- * @brief   Trigger aht10 measurement and read value
- *
+ * Trigger aht10 measurement and read value
  * @return  aht10_info_t    aht10 info struct
  */
 aht10_info_t aht10_read()

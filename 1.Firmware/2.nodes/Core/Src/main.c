@@ -27,6 +27,7 @@
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 #include "aht10.h"
+#include "mq2.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -48,6 +49,7 @@
 
 /* USER CODE BEGIN PV */
 aht10_info_t aht10_info;
+mq2_info_t mq2_info;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -100,18 +102,18 @@ int main(void)
   MX_USART2_UART_Init();
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  mq2_init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-      aht10_info = aht10_read();
-      HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-      printf("temperature: %f\r\n", aht10_info.temperature);
-      printf("humidity: %f\r\n", aht10_info.humidity);
-      HAL_Delay(500);
+    aht10_info = aht10_read();
+    mq2_info = mq2_read();
+    printf("temperature: %f\r\n", aht10_info.temperature);
+    printf("humidity: %f\r\n", aht10_info.humidity);
+    HAL_Delay(500);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -174,8 +176,8 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 PUTCHAR_PROTOTYPE
 {
-    HAL_UART_Transmit(&huart1, (uint8_t *) &ch, 1, 0xFFFF);
-    return ch;
+  HAL_UART_Transmit(&huart1, (uint8_t *) &ch, 1, 0xFFFF);
+  return ch;
 }
 /* USER CODE END 4 */
 
