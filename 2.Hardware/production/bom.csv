@@ -1,0 +1,6 @@
+﻿Designator,Footprint,Quantity,Value,LCSC Part #
+J1,PinSocket_1x04_P2.54mm_Vertical,1,MQ2,
+J2,PinSocket_1x04_P2.54mm_Vertical,1,AHT10,
+U1,L33_433UD22S,1,LoRa,
+U2,LCKFB_GD32F470,1,LCKFP_GD32F470,
+U3,EVB_Air700E,1,EVB_Air700E,
