@@ -102,7 +102,7 @@ int main(void)
   MX_USART2_UART_Init();
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
-  mq2_init();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -113,6 +113,8 @@ int main(void)
     mq2_info = mq2_read();
     printf("temperature: %f\r\n", aht10_info.temperature);
     printf("humidity: %f\r\n", aht10_info.humidity);
+    printf("smoke_dense: %f\r\n", mq2_info.smoke_dense);
+    printf("detected: %d\r\n", mq2_info.detected);
     HAL_Delay(500);
     /* USER CODE END WHILE */
 
