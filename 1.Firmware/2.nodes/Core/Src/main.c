@@ -26,6 +26,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
+#include <string.h>
 #include "aht10.h"
 #include "mq2.h"
 /* USER CODE END Includes */
@@ -50,6 +51,10 @@
 /* USER CODE BEGIN PV */
 aht10_info_t aht10_info;
 mq2_info_t mq2_info;
+// unique_id address
+static uint32_t *id_addr = (uint32_t *) 0x1FFF7A10;
+// device1,2,3 unique id
+uint32_t device_id[3] = {892499600, 892478838, 892497552};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
