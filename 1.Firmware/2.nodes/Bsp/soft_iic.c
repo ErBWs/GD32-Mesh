@@ -94,7 +94,7 @@ static void soft_iic_send_ack(const soft_iic_info_struct *iic, const uint8_t ack
 /**
  * 软件 IIC 获取 ACK/NAKC 信号 内部调用
  * @param       iic     软件 IIC 结构体指针
- * @return      uint8_t ACK 状态
+ * @retval      uint8_t ACK 状态
  */
 static uint8_t soft_iic_wait_ack(soft_iic_info_struct *iic)
 {
@@ -124,7 +124,7 @@ static uint8_t soft_iic_wait_ack(soft_iic_info_struct *iic)
  * 软件 IIC 发送 8bit 数据 内部调用
  * @param       iic     软件 IIC 结构体指针
  * @param       data    数据
- * @return      uint8_t ACK 状态
+ * @retval      uint8_t ACK 状态
  */
 static uint8_t soft_iic_send_data(soft_iic_info_struct *iic, const uint8_t data)
 {
@@ -146,7 +146,7 @@ static uint8_t soft_iic_send_data(soft_iic_info_struct *iic, const uint8_t data)
  * 软件 IIC 读取 8bit 数据 内部调用
  * @param       iic     软件 IIC 结构体指针
  * @param       ack     ACK 或 NACK
- * @return      uint8_t 数据
+ * @retval      uint8_t 数据
  */
 static uint8_t soft_iic_read_data(soft_iic_info_struct *iic, uint8_t ack)
 {
@@ -310,7 +310,7 @@ void soft_iic_write_16bit_registers(soft_iic_info_struct *iic, const uint16_t re
 /**
  * 软件 IIC 接口读取 8bit 数据
  * @param       iic         软件 IIC 结构体指针
- * @return      uint8_t     返回读取的 8bit 数据
+ * @retval      uint8_t     返回读取的 8bit 数据
  */
 uint8_t soft_iic_read_8bit(soft_iic_info_struct *iic)
 {
@@ -341,7 +341,7 @@ void soft_iic_read_8bit_array(soft_iic_info_struct *iic, uint8_t *data, uint32_t
 /**
  * 软件 IIC 接口读取 16bit 数据
  * @param       iic             软件 IIC 结构体指针
- * @return      uint16_t        返回读取的 16bit 数据
+ * @retval      uint16_t        返回读取的 16bit 数据
  */
 uint16_t soft_iic_read_16bit(soft_iic_info_struct *iic)
 {
@@ -376,7 +376,7 @@ void soft_iic_read_16bit_array(soft_iic_info_struct *iic, uint16_t *data, uint32
  * 软件 IIC 接口从传感器寄存器读取 8bit 数据
  * @param       iic             软件 IIC 结构体指针
  * @param       register_name   传感器的寄存器地址
- * @return      uint8_t         返回读取的 8bit 数据
+ * @retval      uint8_t         返回读取的 8bit 数据
  */
 uint8_t soft_iic_read_8bit_register(soft_iic_info_struct *iic, const uint8_t register_name)
 {
@@ -416,7 +416,7 @@ soft_iic_read_8bit_registers(soft_iic_info_struct *iic, const uint8_t register_n
  * 软件 IIC 接口从传感器寄存器读取 16bit 数据
  * @param       iic             软件 IIC 结构体指针
  * @param       register_name   传感器的寄存器地址
- * @return      uint16_t        返回读取的 16bit 数据
+ * @retval      uint16_t        返回读取的 16bit 数据
  */
 uint16_t soft_iic_read_16bit_register(soft_iic_info_struct *iic, const uint16_t register_name)
 {
@@ -527,7 +527,7 @@ void soft_iic_sccb_write_register(soft_iic_info_struct *iic, const uint8_t regis
  * 软件 IIC 接口 SCCB 模式从传感器寄存器读取 8bit 数据
  * @param       iic             软件 IIC 结构体指针
  * @param       register_name   传感器的寄存器地址
- * @return      uint8_t         返回读取的 8bit 数据
+ * @retval      uint8_t         返回读取的 8bit 数据
  */
 uint8_t soft_iic_sccb_read_register(soft_iic_info_struct *iic, const uint8_t register_name)
 {

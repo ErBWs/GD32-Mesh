@@ -26,7 +26,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
-#include <string.h>
 #include "aht10.h"
 #include "mq2.h"
 /* USER CODE END Includes */
@@ -51,6 +50,8 @@
 /* USER CODE BEGIN PV */
 aht10_info_t aht10_info;
 mq2_info_t mq2_info;
+// frame head send to gateway
+uint8_t gateway_frame[3] = {0x00, 0x01, 0x0A};
 // unique_id address
 static uint32_t *id_addr = (uint32_t *) 0x1FFF7A10;
 // device1,2,3 unique id
@@ -114,13 +115,21 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    aht10_info = aht10_read();
-    mq2_info = mq2_read();
-    printf("temperature: %f\r\n", aht10_info.temperature);
-    printf("humidity: %f\r\n", aht10_info.humidity);
-    printf("smoke_dense: %f\r\n", mq2_info.smoke_dense);
-    printf("detected: %d\r\n", mq2_info.detected);
-    HAL_Delay(500);
+    if (*id_addr == device_id[1]) {
+      mq2_info = mq2_read();
+      HAL_UART_Transmit(&huart2, gateway_frame, 3, 0xFFFF);
+      printf("smoke_dense: %f\r\n", mq2_info.smoke_dense);
+      printf("detected: %d\r\n", mq2_info.detected);
+      HAL_Delay(1000);
+    } else if (*id_addr == device_id[2]) {
+      aht10_info = aht10_read();
+      HAL_UART_Transmit(&huart2, gateway_frame, 3, 0xFFFF);
+      // HAL_UART_Transmit(&huart2, (uint8_t *) 0xAA, 1, 0xFFFF);
+      printf("hello\r\n");
+      // printf("temperature: %f\r\n", aht10_info.temperature);
+      // printf("humidity: %f\r\n", aht10_info.humidity);
+      HAL_Delay(500);
+    }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -183,7 +192,7 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 PUTCHAR_PROTOTYPE
 {
-  HAL_UART_Transmit(&huart1, (uint8_t *) &ch, 1, 0xFFFF);
+  HAL_UART_Transmit(&huart2, (uint8_t *) &ch, 1, 0xFFFF);
   return ch;
 }
 /* USER CODE END 4 */

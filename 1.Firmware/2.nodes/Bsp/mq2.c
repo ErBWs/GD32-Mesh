@@ -14,7 +14,7 @@ float mq2_value = 0;
 
 /**
  * Read mq2 value
- * @return  mq2_info_t    mq2 info struct
+ * @retval  mq2_info_t    mq2 info struct
  */
 mq2_info_t mq2_read()
 {
