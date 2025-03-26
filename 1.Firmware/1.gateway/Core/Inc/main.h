@@ -59,10 +59,6 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define LED1_Pin GPIO_PIN_3
 #define LED1_GPIO_Port GPIOE
-#define MQ2_Pin GPIO_PIN_10
-#define MQ2_GPIO_Port GPIOF
-#define MQ2_ADC_Pin GPIO_PIN_1
-#define MQ2_ADC_GPIO_Port GPIOC
 #define LED4_Pin GPIO_PIN_5
 #define LED4_GPIO_Port GPIOA
 #define LORA_AUX_Pin GPIO_PIN_5
@@ -75,10 +71,6 @@ void Error_Handler(void);
 #define LED3_GPIO_Port GPIOG
 #define LED2_Pin GPIO_PIN_7
 #define LED2_GPIO_Port GPIOD
-#define AHT10_SCL_Pin GPIO_PIN_8
-#define AHT10_SCL_GPIO_Port GPIOB
-#define AHT10_SDA_Pin GPIO_PIN_9
-#define AHT10_SDA_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 
