@@ -26,10 +26,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
-#include <string.h>
-
-#include "aht10.h"
-#include "mq2.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -50,10 +46,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-aht10_info_t aht10_info;
-mq2_info_t mq2_info;
-// frame head send to gateway
-uint8_t gateway_frame[3] = {0x00, 0x01, 0x0A};
+// frame head send to nodes by broadcast
+uint8_t nodes_frame[3] = {0xFF, 0xFF, 0x0B};
 // unique_id address
 static uint32_t *id_addr = (uint32_t *) 0x1FFF7A10;
 // device1,2,3 unique id
@@ -110,10 +104,8 @@ int main(void)
   MX_USART2_UART_Init();
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
-  if (*id_addr == device_id[1]) {
-    HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_SET);
-  } else if (*id_addr == device_id[2]) {
-    HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_SET);
+  if (*id_addr == device_id[0]) {
+    HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_SET);
   }
   /* USER CODE END 2 */
 
@@ -121,24 +113,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    if (*id_addr == device_id[1]) {
-      const uint8_t smoke[] = "smoke";
-      mq2_info = mq2_read();
-      HAL_UART_Transmit(&huart2, gateway_frame, 3, 0xFFFF);
-      HAL_UART_Transmit(&huart2, smoke, 5, 0xFFFF);
-      HAL_UART_Transmit(&huart2, (uint8_t *) &mq2_info.smoke_dense, 4, 0xFFFF);
-      HAL_Delay(2000);
-    } else if (*id_addr == device_id[2]) {
-      const uint8_t temp[] = "temp";
-      const uint8_t hum[] = "hum";
-      aht10_info = aht10_read();
-      HAL_UART_Transmit(&huart2, gateway_frame, 3, 0xFFFF);
-      HAL_UART_Transmit(&huart2, temp, 4, 0xFFFF);
-      HAL_UART_Transmit(&huart2, (uint8_t *) &aht10_info.temperature, 4, 0xFFFF);
-      HAL_UART_Transmit(&huart2, hum, 3, 0xFFFF);
-      HAL_UART_Transmit(&huart2, (uint8_t *) &aht10_info.humidity, 4, 0xFFFF);
-      HAL_Delay(1000);
-    }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
