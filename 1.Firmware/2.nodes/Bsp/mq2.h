@@ -16,7 +16,7 @@ extern "C"
 #include <stdbool.h>
 
 typedef struct {
-    double smoke_dense;
+    float smoke_dense;
     bool detected;
 } mq2_info_t;
 

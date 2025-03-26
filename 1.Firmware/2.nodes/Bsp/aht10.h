@@ -17,8 +17,8 @@ extern "C"
 #define AHT10_DELAY     100
 
 typedef struct {
-    double temperature;
-    double humidity;
+    float temperature;
+    float humidity;
 } aht10_info_t;
 
 aht10_info_t aht10_read();

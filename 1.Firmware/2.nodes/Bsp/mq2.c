@@ -20,7 +20,7 @@ mq2_info_t mq2_read()
 {
     double adc_val = 0.0;
     mq2_info_t info = {
-        .smoke_dense = 0.0,
+        .smoke_dense = 0.0f,
         .detected = false,
     };
 
@@ -31,7 +31,7 @@ mq2_info_t mq2_read()
     for (uint8_t i = 0; i < 10; i++) {
         adc_val += mq2_adc_val[i];
     }
-    info.smoke_dense = adc_val / 10 / 4096 * 100;
+    info.smoke_dense = (float) adc_val / 10 / 4096 * 100;
 
     HAL_ADC_Stop_DMA(&hadc1);
 

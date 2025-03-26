@@ -26,6 +26,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
+#include <string.h>
+
 #include "aht10.h"
 #include "mq2.h"
 /* USER CODE END Includes */
@@ -108,7 +110,11 @@ int main(void)
   MX_USART2_UART_Init();
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  if (*id_addr == device_id[1]) {
+    HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_SET);
+  } else if (*id_addr == device_id[2]) {
+    HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_SET);
+  }
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -116,19 +122,22 @@ int main(void)
   while (1)
   {
     if (*id_addr == device_id[1]) {
+      const uint8_t smoke[] = "smoke";
       mq2_info = mq2_read();
       HAL_UART_Transmit(&huart2, gateway_frame, 3, 0xFFFF);
-      printf("smoke_dense: %f\r\n", mq2_info.smoke_dense);
-      printf("detected: %d\r\n", mq2_info.detected);
-      HAL_Delay(1000);
+      HAL_UART_Transmit(&huart2, smoke, 5, 0xFFFF);
+      HAL_UART_Transmit(&huart2, (uint8_t *) &mq2_info.smoke_dense, 4, 0xFFFF);
+      HAL_Delay(2000);
     } else if (*id_addr == device_id[2]) {
+      const uint8_t temp[] = "temp";
+      const uint8_t hum[] = "hum";
       aht10_info = aht10_read();
       HAL_UART_Transmit(&huart2, gateway_frame, 3, 0xFFFF);
-      // HAL_UART_Transmit(&huart2, (uint8_t *) 0xAA, 1, 0xFFFF);
-      printf("hello\r\n");
-      // printf("temperature: %f\r\n", aht10_info.temperature);
-      // printf("humidity: %f\r\n", aht10_info.humidity);
-      HAL_Delay(500);
+      HAL_UART_Transmit(&huart2, temp, 4, 0xFFFF);
+      HAL_UART_Transmit(&huart2, (uint8_t *) &aht10_info.temperature, 4, 0xFFFF);
+      HAL_UART_Transmit(&huart2, hum, 3, 0xFFFF);
+      HAL_UART_Transmit(&huart2, (uint8_t *) &aht10_info.humidity, 4, 0xFFFF);
+      HAL_Delay(1000);
     }
     /* USER CODE END WHILE */
 
@@ -192,7 +201,7 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 PUTCHAR_PROTOTYPE
 {
-  HAL_UART_Transmit(&huart2, (uint8_t *) &ch, 1, 0xFFFF);
+  HAL_UART_Transmit(&huart1, (uint8_t *) &ch, 1, 0xFFFF);
   return ch;
 }
 /* USER CODE END 4 */

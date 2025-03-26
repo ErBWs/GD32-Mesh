@@ -41,10 +41,10 @@ aht10_info_t aht10_read()
 
     // Convert
     const int hum = (((res[1] << 12) | (res[2] << 4)) | (res[3] >> 4));
-    info.humidity = (double) hum / 1048576.0 * 100.0;
+    info.humidity = (float) hum / 1048576.0f * 100.0f;
 
     const int temp = ((res[3] & 0x0F) << 16) | (res[4] << 8) | res[5];
-    info.temperature = (double) temp / 1048576.0 * 200 - 50;
+    info.temperature = (float) temp / 1048576.0f * 200 - 50;
 
     return info;
 }
