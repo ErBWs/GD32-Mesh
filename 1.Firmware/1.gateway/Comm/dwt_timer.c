@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-#include "../Bsp/dwt/dwt_timer.h"
+#include "dwt_timer.h"
 
 uint32_t dwt_time_us = 0;
 
