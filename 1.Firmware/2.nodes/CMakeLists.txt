@@ -56,6 +56,7 @@ include_directories(
     Drivers/CMSIS/Device/ST/STM32F4xx/Include
     Drivers/CMSIS/Include
     Bsp
+    Comm
 )
 
 add_definitions(-DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx)
@@ -64,6 +65,7 @@ file(GLOB_RECURSE SOURCES
     "Core/*.*"
     "Drivers/*.*"
     "Bsp/*.*"
+    "Comm/*.*"
 )
 
 set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32F429ZGTX_FLASH.ld)

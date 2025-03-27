@@ -27,9 +27,8 @@
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 #include <string.h>
-
-#include "aht10.h"
-#include "mq2.h"
+#include "sensors/aht10.h"
+#include "sensors/mq2.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -135,6 +134,7 @@ int main(void)
       HAL_UART_Transmit(&huart2, gateway_frame, 3, 0xFFFF);
       HAL_UART_Transmit(&huart2, temp, 4, 0xFFFF);
       HAL_UART_Transmit(&huart2, (uint8_t *) &aht10_info.temperature, 4, 0xFFFF);
+      HAL_UART_Transmit(&huart2, gateway_frame, 3, 0xFFFF);
       HAL_UART_Transmit(&huart2, hum, 3, 0xFFFF);
       HAL_UART_Transmit(&huart2, (uint8_t *) &aht10_info.humidity, 4, 0xFFFF);
       HAL_Delay(1000);
