@@ -15,6 +15,8 @@ extern "C"
 
 #include <stdbool.h>
 
+#define SMOKE_LORA_ADDR     0x01
+
 typedef struct {
     float smoke_dense;
     bool detected;

@@ -13,8 +13,10 @@ extern "C"
 {
 #endif
 
-#define AHT10_ADDR      0x38
-#define AHT10_DELAY     100
+#define AHT10_ADDR              0x38
+#define AHT10_DELAY             100
+#define TEMPER_LORA_ADDR        0x02
+#define HUMIDITY_LORA_ADDR      0x03
 
 typedef struct {
     float temperature;

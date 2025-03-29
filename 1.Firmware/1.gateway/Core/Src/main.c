@@ -18,13 +18,14 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "dma.h"
 #include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
-#include "../../Comm/dwt_timer.h"
+#include <string.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -34,7 +35,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define RX_BUFF_SIZE    20
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -45,6 +46,9 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+extern DMA_HandleTypeDef hdma_usart2_rx;
+// usart2 receive buffer
+uint8_t rx2_buff[RX_BUFF_SIZE] = {0};
 // frame head send to nodes by broadcast
 uint8_t nodes_frame[3] = {0xFF, 0xFF, 0x0B};
 // unique_id address
@@ -97,15 +101,16 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
-  dwt_timer_start();
+  HAL_UARTEx_ReceiveToIdle_DMA(&huart2, rx2_buff, RX_BUFF_SIZE);
+  __HAL_DMA_DISABLE_IT(&hdma_usart2_rx, DMA_IT_HT);
   if (*id_addr == device_id[0]) {
     HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_SET);
   }
-  dwt_timer_stop();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -176,6 +181,16 @@ PUTCHAR_PROTOTYPE
 {
   HAL_UART_Transmit(&huart1, (uint8_t *) &ch, 1, 0xFFFF);
   return ch;
+}
+
+void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
+{
+  if (huart->Instance == USART2) {
+    HAL_UART_Transmit(&huart1, rx2_buff, sizeof(rx2_buff), 0xFFFF);
+    memset(rx2_buff, 0x00, sizeof(rx2_buff));
+    HAL_UARTEx_ReceiveToIdle_DMA(&huart2, rx2_buff, RX_BUFF_SIZE);
+    __HAL_DMA_DISABLE_IT(&hdma_usart2_rx, DMA_IT_HT);
+  }
 }
 /* USER CODE END 4 */
 
