@@ -73,7 +73,7 @@ void Error_Handler(void);
 #define LED2_GPIO_Port GPIOD
 
 /* USER CODE BEGIN Private defines */
-
+#define RX_BUFF_SIZE    20
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

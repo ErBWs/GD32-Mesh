@@ -26,6 +26,7 @@
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 #include <string.h>
+#include "lora/lora.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -35,7 +36,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define RX_BUFF_SIZE    20
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -49,8 +50,6 @@
 extern DMA_HandleTypeDef hdma_usart2_rx;
 // usart2 receive buffer
 uint8_t rx2_buff[RX_BUFF_SIZE] = {0};
-// frame head send to nodes by broadcast
-uint8_t nodes_frame[3] = {0xFF, 0xFF, 0x0B};
 // unique_id address
 static uint32_t *id_addr = (uint32_t *) 0x1FFF7A10;
 // device1,2,3 unique id
@@ -186,7 +185,10 @@ PUTCHAR_PROTOTYPE
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 {
   if (huart->Instance == USART2) {
-    HAL_UART_Transmit(&huart1, rx2_buff, sizeof(rx2_buff), 0xFFFF);
+    lora_parse_frame(rx2_buff);
+    printf("temp: %f\r\n", temperature.val);
+    printf("humi: %f\r\n", humidity.val);
+    printf("smoke: %f\r\n", smoke.val);
     memset(rx2_buff, 0x00, sizeof(rx2_buff));
     HAL_UARTEx_ReceiveToIdle_DMA(&huart2, rx2_buff, RX_BUFF_SIZE);
     __HAL_DMA_DISABLE_IT(&hdma_usart2_rx, DMA_IT_HT);

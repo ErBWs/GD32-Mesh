@@ -4,7 +4,6 @@
  */
 
 #include "lora.h"
-#include <stdint.h>
 #include "main.h"
 #include "usart.h"
 
