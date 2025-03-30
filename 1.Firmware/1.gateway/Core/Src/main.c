@@ -116,6 +116,10 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    printf("temp: %f\r\n", temperature.val);
+    printf("humi: %f\r\n", humidity.val);
+    printf("smoke: %f\r\n", smoke.val);
+    HAL_Delay(500);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -186,9 +190,6 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 {
   if (huart->Instance == USART2) {
     lora_parse_frame(rx2_buff);
-    printf("temp: %f\r\n", temperature.val);
-    printf("humi: %f\r\n", humidity.val);
-    printf("smoke: %f\r\n", smoke.val);
     memset(rx2_buff, 0x00, sizeof(rx2_buff));
     HAL_UARTEx_ReceiveToIdle_DMA(&huart2, rx2_buff, RX_BUFF_SIZE);
     __HAL_DMA_DISABLE_IT(&hdma_usart2_rx, DMA_IT_HT);
