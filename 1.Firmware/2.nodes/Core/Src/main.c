@@ -122,7 +122,7 @@ int main(void)
     if (*id_addr == device_id[1]) {
       mq2_info = mq2_read();
       lora_send_to_gateway(SMOKE_LORA_ADDR, mq2_info.smoke_dense);
-      HAL_Delay(700);
+      HAL_Delay(800);
     } else if (*id_addr == device_id[2]) {
       aht10_info = aht10_read();
       lora_send_to_gateway(TEMPER_LORA_ADDR, aht10_info.temperature);
