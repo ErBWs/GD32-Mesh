@@ -119,7 +119,7 @@ int main(void)
     printf("temp: %f\r\n", temperature.val);
     printf("humi: %f\r\n", humidity.val);
     printf("smoke: %f\r\n", smoke.val);
-    HAL_Delay(500);
+    HAL_Delay(5000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -182,7 +182,7 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 PUTCHAR_PROTOTYPE
 {
-  HAL_UART_Transmit(&huart1, (uint8_t *) &ch, 1, 0xFFFF);
+  HAL_UART_Transmit(&huart3, (uint8_t *) &ch, 1, 0xFFFF);
   return ch;
 }
 
