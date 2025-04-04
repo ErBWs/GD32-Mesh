@@ -65,21 +65,12 @@ uart.on(uart_id, "receive", function(id, len)
 
     -- Publish.
     if mqttc and mqttc:ready() then
-        if temp and temp ~= 0 then
+        if temp and humi and temp ~= 0 and humi ~= 0 then
             local json_str = string.format(
-                '{"services":[{"service_id":"sensors","properties":{"temperature":%.2f}}]}',
-                temp
+                '{"services":[{"service_id":"sensors","properties":{"temperature":%.2f,"humidity":%.2f}}]}',
+                temp, humi
             )
-            log.info("uart", "temp:", json_str)
-            mqttc:publish(pub_topic, json_str, qos)
-        end
-
-        if humi and humi ~= 0 then
-            local json_str = string.format(
-                '{"services":[{"service_id":"sensors","properties":{"humidity":%.2f}}]}',
-                humi
-            )
-            log.info("uart", "humi:", json_str)
+            log.info("uart", "aht10:", json_str)
             mqttc:publish(pub_topic, json_str, qos)
         end
 
@@ -88,7 +79,7 @@ uart.on(uart_id, "receive", function(id, len)
                 '{"services":[{"service_id":"sensors","properties":{"smoke":%.2f}}]}',
                 smoke
             )
-            log.info("uart", "temp:", json_str)
+            log.info("uart", "mq2:", json_str)
             mqttc:publish(pub_topic, json_str, qos)
         end
     end
