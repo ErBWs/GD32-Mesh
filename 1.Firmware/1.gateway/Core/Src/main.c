@@ -119,7 +119,7 @@ int main(void)
     printf("temp: %f\r\n", temperature.val);
     printf("humi: %f\r\n", humidity.val);
     printf("smoke: %f\r\n", smoke.val);
-    HAL_Delay(5000);
+    HAL_Delay(10000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
