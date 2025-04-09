@@ -14,15 +14,18 @@ class Iot {
     priority: CachePriority.high,
   );
 
-  Future<String> getAuthToken() async {
+  Future<String> getAuthToken({
+    required String projectID,
+    required String userName,
+    required String password,
+  }) async {
     dio.interceptors.add(DioCacheInterceptor(options: _cacheOptions));
-    
+
     final response = await dio.post(
       "https://iam.cn-east-3.myhuaweicloud.com/v3/auth/tokens",
       options: Options(
-        extra: _cacheOptions.copyWith(
-          maxStale: const Duration(days: 1),
-        ).toExtra(),
+        extra:
+            _cacheOptions.copyWith(maxStale: const Duration(days: 1)).toExtra(),
       ),
       data: {
         "auth": {
@@ -30,14 +33,14 @@ class Iot {
             "methods": ["password"],
             "password": {
               "user": {
-                "name": "user1",
-                "password": "",
+                "name": userName,
+                "password": password,
                 "domain": {"name": "erbw_s"}
               }
             }
           },
           "scope": {
-            "project": {"id": "be623ce1bf6c4ce9b9609768b1d4e68e"}
+            "project": {"id": projectID}
           }
         }
       },
@@ -46,15 +49,17 @@ class Iot {
     return response.headers.value("X-Subject-Token") ?? "";
   }
 
-  Future<Response> getShadowData(
-      String projectID, String deviceID) async {
+  Future<Response> getShadowData({
+    required String projectID,
+    required String deviceID,
+    required String userName,
+    required String password,
+    required String token,
+  }) async {
     String shadowUrl =
         "https://0c5e592236.st1.iotda-app.cn-east-3.myhuaweicloud.com/v5/iot/{project_id}/devices/{device_id}/shadow";
     shadowUrl = shadowUrl.replaceFirst("{project_id}", projectID);
     shadowUrl = shadowUrl.replaceFirst("{device_id}", deviceID);
-
-    final token = await getAuthToken();
-    debugPrint(token);
 
     Options options = Options(
       responseType: ResponseType.json,
