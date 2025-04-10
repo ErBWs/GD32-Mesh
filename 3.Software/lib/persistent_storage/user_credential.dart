@@ -1,17 +1,19 @@
-import 'package:isar/isar.dart';
+import 'package:hive/hive.dart';
 
-part 'credential.g.dart';
+part 'user_credential.g.dart';
 
-@collection
-class Credential {
-  Id id = Isar.autoIncrement;
-
+@HiveType(typeId: 0)
+class UserCredential {
+  @HiveField(0)
   String projectID;
+  @HiveField(1)
   String deviceID;
+  @HiveField(2)
   String userName;
+  @HiveField(3)
   String password;
 
-  Credential({
+  UserCredential({
     required this.projectID,
     required this.deviceID,
     required this.userName,

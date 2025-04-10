@@ -1,34 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
-import 'package:http_cache_isar_store/http_cache_isar_store.dart';
-import 'package:meshw/persistent_storage/isar_instance.dart';
 
 class Iot {
   final Dio dio = Dio(BaseOptions(
     connectTimeout: const Duration(milliseconds: 12000),
     receiveTimeout: const Duration(milliseconds: 12000),
   ));
-  final CacheOptions _cacheOptions = CacheOptions(
-    store: IsarCacheStore(isarInstance.directory.path),
-    policy: CachePolicy.forceCache,
-    maxStale: const Duration(days: 1),
-    priority: CachePriority.high,
-  );
 
   Future<String> getAuthToken({
     required String projectID,
     required String userName,
     required String password,
   }) async {
-    dio.interceptors.add(DioCacheInterceptor(options: _cacheOptions));
-
     final response = await dio.post(
       "https://iam.cn-east-3.myhuaweicloud.com/v3/auth/tokens",
-      options: Options(
-        extra:
-            _cacheOptions.copyWith(maxStale: const Duration(days: 1)).toExtra(),
-      ),
       data: {
         "auth": {
           "identity": {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:meshw/persistent_storage/isar_instance.dart';
+import 'package:meshw/persistent_storage/hive_instance.dart';
 import 'package:meshw/ui/main_screen.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await isarInstance.init();
+  WidgetsFlutterBinding.ensureInitialized();
+  await hiveInstance.init();
   runApp(const MyApp());
 }
 
