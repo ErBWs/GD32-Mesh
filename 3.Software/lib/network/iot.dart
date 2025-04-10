@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:http_cache_isar_store/http_cache_isar_store.dart';
-import 'package:isar/isar.dart';
 import 'package:meshw/persistent_storage/isar_instance.dart';
 
 class Iot {
