@@ -5,15 +5,16 @@ import 'package:meshw/network/iot.dart';
 import 'package:meshw/persistent_storage/hive_instance.dart';
 import 'package:meshw/persistent_storage/user_credential.dart';
 import 'package:meshw/persistent_storage/user_token.dart';
+import 'package:meshw/ui/sensors_page.dart';
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
@@ -24,7 +25,7 @@ class _MainScreenState extends State<MainScreen> {
   bool passwordVisible = false;
   bool isLoggedIn = false;
 
-  void _refreshToken({
+  void refreshToken({
     required String userName,
     required String password,
   }) async {
@@ -71,6 +72,12 @@ class _MainScreenState extends State<MainScreen> {
             .showSnackBar(SnackBar(content: Text(message)));
       }
     }
+  }
+
+  void logOut() {
+    setState(() {
+      isLoggedIn = false;
+    });
   }
 
   Widget get _buildLoginForm {
@@ -123,7 +130,7 @@ class _MainScreenState extends State<MainScreen> {
                 FilledButton.tonal(
                   onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                      _refreshToken(
+                      refreshToken(
                           userName: userNameController.text,
                           password: passwordController.text);
                     }
@@ -150,10 +157,6 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  Widget get _buildItem {
-    return Center(child: Text("登录成功"));
-  }
-
   @override
   void initState() {
     super.initState();
@@ -174,16 +177,16 @@ class _MainScreenState extends State<MainScreen> {
     userNameController.text = credential.userName;
     passwordController.text = credential.password;
     if (token.token.isNotEmpty) {
-      isLoggedIn = true;
       if (DateTime.now()
               .difference(DateTime.fromMillisecondsSinceEpoch(token.time))
               .inHours >=
           24) {
         if (credential.userName.isNotEmpty && credential.password.isNotEmpty) {
-          _refreshToken(
+          refreshToken(
               userName: credential.userName, password: credential.password);
         }
       }
+      isLoggedIn = true;
     }
   }
 
@@ -196,7 +199,9 @@ class _MainScreenState extends State<MainScreen> {
               title: const Text("Mesh-Watcher"),
             )
           : null,
-      body: isLoggedIn ? _buildItem : _buildLoginForm,
+      body: isLoggedIn
+          ? SensorsPage(credential: credential, token: token, logOut: logOut)
+          : _buildLoginForm,
     );
   }
 }

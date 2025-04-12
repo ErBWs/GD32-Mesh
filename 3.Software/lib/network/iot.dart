@@ -60,7 +60,6 @@ class Iot {
 
     try {
       final response = await dio.get(shadowUrl, options: options);
-      debugPrint(response.data.toString());
       return response;
     } catch (e) {
       debugPrint('请求失败: $e');

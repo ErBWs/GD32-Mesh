@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meshw/persistent_storage/hive_instance.dart';
-import 'package:meshw/ui/main_screen.dart';
+import 'package:meshw/ui/login_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const MainScreen(),
+      home: const LoginPage(),
     );
   }
 }
