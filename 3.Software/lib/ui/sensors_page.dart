@@ -88,6 +88,12 @@ class _SensorsPageState extends State<SensorsPage> {
   }
 
   @override
+  void dispose() {
+    requestTimer?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(

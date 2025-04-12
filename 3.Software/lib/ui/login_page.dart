@@ -194,11 +194,11 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: (Platform.isMacOS || Platform.isWindows || Platform.isLinux)
-          ? AppBar(
+          ? null
+          : AppBar(
               backgroundColor: Theme.of(context).colorScheme.primaryContainer,
               title: const Text("Mesh-Watcher"),
-            )
-          : null,
+            ),
       body: isLoggedIn
           ? SensorsPage(credential: credential, token: token, logOut: logOut)
           : _buildLoginForm,
