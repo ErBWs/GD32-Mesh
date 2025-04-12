@@ -41,7 +41,7 @@
 ### MQTTS
 
 使用华为云作为 MQTT Broker，带 SSL 加密，数据格式为 json
-```
+```http
 Topic: $oc/devices/67ea52cbc957870e570e769f_LoRaGateway/sys/properties/report
 ```
 ```json

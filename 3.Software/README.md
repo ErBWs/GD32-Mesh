@@ -14,9 +14,11 @@
 
 文档：https://support.huaweicloud.com/api-iam/iam_30_0001.html
 
-```json
+```http
 POST https://iam.cn-east-3.myhuaweicloud.com/v3/auth/tokens
+```
 Body:
+```json
 {
     "auth": {
         "identity": {
@@ -48,11 +50,12 @@ Response 中的 `X-Subject-Token` 即为获取设备影子时需要的 Token
 
 文档：https://support.huaweicloud.com/api-iothub/iot_06_v5_0079.html
 
-```json
+```http
 GET https://iotda.cn-east-3.myhuaweicloud.com/v5/iot/{project_id}/devices/{device_id}/shadow
 Header: X-Auth-Token: {your_token}
-
+```
 Response:
+```json
 {
     "device_id": "{device_id}",
     "shadow": [
