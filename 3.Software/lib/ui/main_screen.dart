@@ -94,10 +94,10 @@ class _MainScreenState extends State<MainScreen> {
                           message = "HTTP Error(404): 未找到资源";
                           break;
                         case 500:
-                          message = "HTTP Error(401): 内部服务错误";
+                          message = "HTTP Error(500): 内部服务错误";
                           break;
                         case 503:
-                          message = "HTTP Error(401): 服务不可用";
+                          message = "HTTP Error(503): 服务不可用";
                           break;
                         default:
                           message = e.message!;
