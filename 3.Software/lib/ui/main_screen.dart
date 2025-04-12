@@ -76,7 +76,6 @@ class _MainScreenState extends State<MainScreen> {
                     credential.userName = userNameController.text;
                     credential.password = passwordController.text;
                     if (token.token.isNotEmpty) {
-                      debugPrint(token.token);
                       hiveInstance.userToken.put('token', token);
                       hiveInstance.userCredential.put('credential', credential);
                     }
