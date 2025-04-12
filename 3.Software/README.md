@@ -6,6 +6,10 @@
 
 使用 [OpenHarmony-SIG 组织的 Flutter 分支仓库](https://gitcode.com/openharmony-sig/flutter_flutter) 以支持 ohos。
 
+| ![](../0.Docs/login.png) | ![](../0.Docs/temp.png) | ![](../0.Docs/humi.png) |
+|:------------------------:|:-----------------------:|:-----------------------:|
+| ![](../0.Docs/login.jpg) | ![](../0.Docs/temp.jpg) | ![](../0.Docs/humi.jpg) |
+
 ## API
 
 可以通过 [Apifox](https://apifox.com/) 测试 API 的获取。
@@ -17,30 +21,32 @@
 ```http
 POST https://iam.cn-east-3.myhuaweicloud.com/v3/auth/tokens
 ```
+
 Body:
+
 ```json
 {
-    "auth": {
-        "identity": {
-            "methods": [
-                "password"
-            ],
-            "password": {
-                "user": {
-                    "name": "{iam_user_name}",
-                    "password": "{your_password}",
-                    "domain": {
-                        "name": "erbw_s"
-                    }
-                }
-            }
-        },
-        "scope": {
-            "project": {
-                "id": "{device_id}"
-            }
+  "auth": {
+    "identity": {
+      "methods": [
+        "password"
+      ],
+      "password": {
+        "user": {
+          "name": "{iam_user_name}",
+          "password": "{your_password}",
+          "domain": {
+            "name": "erbw_s"
+          }
         }
+      }
+    },
+    "scope": {
+      "project": {
+        "id": "{device_id}"
+      }
     }
+  }
 }
 ```
 
@@ -54,28 +60,30 @@ Response 中的 `X-Subject-Token` 即为获取设备影子时需要的 Token
 GET https://iotda.cn-east-3.myhuaweicloud.com/v5/iot/{project_id}/devices/{device_id}/shadow
 Header: X-Auth-Token: {your_token}
 ```
+
 Response:
+
 ```json
 {
-    "device_id": "{device_id}",
-    "shadow": [
-        {
-            "service_id": "sensors",
-            "desired": {
-                "properties": null,
-                "event_time": null
-            },
-            "reported": {
-                "properties": {
-                    "temperature": 23.7,
-                    "humidity": 44.2,
-                    "smoke": 7.47
-                },
-                "event_time": "20250404T074649Z"
-            },
-            "version": 84
-        }
-    ]
+  "device_id": "{device_id}",
+  "shadow": [
+    {
+      "service_id": "sensors",
+      "desired": {
+        "properties": null,
+        "event_time": null
+      },
+      "reported": {
+        "properties": {
+          "temperature": 23.7,
+          "humidity": 44.2,
+          "smoke": 7.47
+        },
+        "event_time": "20250404T074649Z"
+      },
+      "version": 84
+    }
+  ]
 }
 ```
 
