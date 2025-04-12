@@ -4,7 +4,24 @@ import 'package:meshw/ui/main_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await hiveInstance.init();
+  try {
+    await hiveInstance.init();
+  } catch (_) {
+    runApp(MaterialApp(
+      title: '初始化失败',
+      builder: (context, child) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('内部错误'),
+          ),
+          body: const Center(
+            child: Text("请勿重复打开软件"),
+          ),
+        );
+      },
+    ));
+    return;
+  }
   runApp(const MyApp());
 }
 

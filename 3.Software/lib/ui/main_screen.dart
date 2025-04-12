@@ -1,5 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:meshw/network/iot.dart';
+import 'package:meshw/persistent_storage/hive_instance.dart';
+import 'package:meshw/persistent_storage/user_credential.dart';
+import 'package:meshw/persistent_storage/user_token.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -10,13 +14,13 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final formKey = GlobalKey<FormState>();
-  final projectIDController = TextEditingController();
-  final deviceIDController = TextEditingController();
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
 
+  late UserToken token;
+  late UserCredential credential;
+
   bool passwordVisible = false;
-  String a = "";
 
   Widget _buildLoginForm() {
     return Form(
@@ -25,36 +29,6 @@ class _MainScreenState extends State<MainScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextFormField(
-              controller: projectIDController,
-              decoration: InputDecoration(
-                labelText: '项目ID',
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    projectIDController.clear();
-                  },
-                  icon: const Icon(Icons.cancel_outlined),
-                ),
-                filled: true,
-              ),
-              validator: (value) => value?.isEmpty ?? true ? '请输入项目ID' : null,
-            ),
-            const SizedBox(height: 8),
-            TextFormField(
-              controller: deviceIDController,
-              decoration: InputDecoration(
-                labelText: '设备ID',
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    deviceIDController.clear();
-                  },
-                  icon: const Icon(Icons.cancel_outlined),
-                ),
-                filled: true,
-              ),
-              validator: (value) => value?.isEmpty ?? true ? '请输入设备ID' : null,
-            ),
-            const SizedBox(height: 8),
             TextFormField(
               controller: userNameController,
               decoration: InputDecoration(
@@ -93,7 +67,46 @@ class _MainScreenState extends State<MainScreen> {
             const SizedBox(height: 8),
             FilledButton.tonal(
               onPressed: () async {
-                await iot.getAuthToken(projectID: 'projectID', userName: 'userName', password: passwordController.text);
+                if (formKey.currentState!.validate()) {
+                  try {
+                    token = await iot.getAuthToken(
+                      userName: userNameController.text,
+                      password: passwordController.text,
+                    );
+                    credential.userName = userNameController.text;
+                    credential.password = passwordController.text;
+                    if (token.token.isNotEmpty) {
+                      debugPrint(token.token);
+                      hiveInstance.userToken.put('token', token);
+                      hiveInstance.userCredential.put('credential', credential);
+                    }
+                  } on DioException catch (e) {
+                    String message = "";
+                    if (mounted) {
+                      switch (e.response?.statusCode) {
+                        case 401:
+                          message = "HTTP Error(401): 登录失败，请检查用户名和密码";
+                          break;
+                        case 403:
+                          message = "HTTP Error(403): 登录失败，该用户没有权限";
+                          break;
+                        case 404:
+                          message = "HTTP Error(404): 未找到资源";
+                          break;
+                        case 500:
+                          message = "HTTP Error(401): 内部服务错误";
+                          break;
+                        case 503:
+                          message = "HTTP Error(401): 服务不可用";
+                          break;
+                        default:
+                          message = e.message!;
+                      }
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(SnackBar(content: Text(message)));
+                    }
+                  }
+                }
               },
               style: ButtonStyle(
                 backgroundColor: WidgetStateProperty.resolveWith((_) {
@@ -112,13 +125,34 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    token = hiveInstance.userToken.get(
+      'token',
+      defaultValue: UserToken(
+        token: "",
+        time: DateTime.now().millisecondsSinceEpoch,
+      ),
+    )!;
+    credential = hiveInstance.userCredential.get(
+      'credential',
+      defaultValue: UserCredential(
+        userName: "",
+        password: "",
+      ),
+    )!;
+    userNameController.text = credential.userName;
+    passwordController.text = credential.password;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         title: const Text("Mesh-Watcher"),
       ),
-      body: _buildLoginForm(),// This trailing comma makes auto-formatting nicer for build methods.
+      body: _buildLoginForm(),
     );
   }
 }
