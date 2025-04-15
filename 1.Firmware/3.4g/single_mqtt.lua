@@ -4,7 +4,7 @@
 local mqtt_host = "0c5e592236.st1.iotda-device.cn-east-3.myhuaweicloud.com"
 local mqtt_port = 8883
 local mqtt_isssl = true
-local client_id = "67ea52cbc957870e570e769f_LoRaGateway_0_0_2025040311"
+local client_id = "67ea52cbc957870e570e769f_LoRaGateway_0_0_2025041516"
 local user_name = "67ea52cbc957870e570e769f_LoRaGateway"
 local password = "password"
 
@@ -65,21 +65,12 @@ uart.on(uart_id, "receive", function(id, len)
 
     -- Publish.
     if mqttc and mqttc:ready() then
-        if temp and humi and temp ~= 0 and humi ~= 0 then
+        if temp and humi and temp ~= 0 and humi ~= 0 and smoke and smoke ~= 0 then
             local json_str = string.format(
-                '{"services":[{"service_id":"sensors","properties":{"temperature":%.2f,"humidity":%.2f}}]}',
-                temp, humi
+                '{"services":[{"service_id":"sensors","properties":{"temperature":%.2f,"humidity":%.2f,"smoke":%.2f}}]}',
+                temp, humi, smoke
             )
-            log.info("uart", "aht10:", json_str)
-            mqttc:publish(pub_topic, json_str, qos)
-        end
-
-        if smoke and smoke ~= 0 then
-            local json_str = string.format(
-                '{"services":[{"service_id":"sensors","properties":{"smoke":%.2f}}]}',
-                smoke
-            )
-            log.info("uart", "mq2:", json_str)
+            log.info("uart", "publish:", json_str)
             mqttc:publish(pub_topic, json_str, qos)
         end
     end
